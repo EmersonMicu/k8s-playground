@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-app
+  labels:
+    app: springboot-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: springboot-app
+  template:
+    metadata:
+      labels:
+        app: springboot-app
+    spec:
+      containers:
+        - name: springboot-container
+          image: micuemerson/springboot-k8s-health-checks:v1.0.7
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 2
+            failureThreshold: 5
+          startupProbe:
+            httpGet:
+              path: /actuator/health/startup
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            failureThreshold: 2
+            
