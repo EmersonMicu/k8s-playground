@@ -11,7 +11,7 @@ public class CustomLivenessIndicator implements HealthIndicator {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomLivenessIndicator.class);
 
-    private static int NO_FAILS = 3;
+    private Integer NO_FAILS = 3;
 
     @Override
     public Health health() {
@@ -21,9 +21,9 @@ public class CustomLivenessIndicator implements HealthIndicator {
     }
 
     private boolean checkLiveness() {
-        if(NO_FAILS > 0) // simulate that after 3 hits on /startup endpoint, will return true
+        if(NO_FAILS > 0) // simulate that after 3 hits on /liveness endpoint, will return true
             NO_FAILS--;
 
-        return NO_FAILS == 0;
+        return NO_FAILS.equals(0);
     }
 }

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Component("customStartup")
 public class CustomStartupIndicator implements HealthIndicator {
-    private static final Logger logger = LoggerFactory.getLogger(CustomLivenessIndicator.class);
-    private static int NO_FAILS = 3;
+    private static final Logger logger = LoggerFactory.getLogger(CustomStartupIndicator.class);
+    private Integer NO_FAILS = 3;
 
     @Override
     public Health health() {
@@ -22,6 +22,6 @@ public class CustomStartupIndicator implements HealthIndicator {
         if(NO_FAILS > 0) // simulate that after 3 hits on /startup endpoint, will return true
             NO_FAILS--;
 
-        return NO_FAILS == 0;
+        return NO_FAILS.equals(0);
     }
 }
