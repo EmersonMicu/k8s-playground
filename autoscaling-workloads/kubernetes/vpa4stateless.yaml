@@ -1,0 +1,11 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: vpa4stateless
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: springboot-app
+  updatePolicy:
+    updateMode: "Off"  # Options: Off, Initial, Auto

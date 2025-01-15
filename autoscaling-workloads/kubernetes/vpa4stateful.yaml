@@ -1,0 +1,21 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: vpa4stateful
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: StatefulSet
+    name: example-statefulset
+  updatePolicy:
+    updateMode: "Auto"  # Options: Off, Initial, Auto
+  resourcePolicy:
+    containerPolicies:
+    - containerName: busybox
+      minAllowed:
+        cpu: "200m"
+        memory: "32Mi"
+      maxAllowed:
+        cpu: "1"
+        memory: "512Mi"
+      controlledResources: ["cpu", "memory"]
